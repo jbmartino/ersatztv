@@ -47,7 +47,12 @@ internal static class Mapper
             channel.Name,
             channel.FFmpegProfile.Name,
             channel.PreferredAudioLanguageCode,
-            GetStreamingMode(channel));
+            GetStreamingMode(channel),
+            channel.Artwork?
+                .Where(a => a.ArtworkKind == ArtworkKind.Logo)
+                .Select(a => a.Path)
+                .HeadOrNone()
+                .IfNone(string.Empty));
 
     internal static ResolutionViewModel ProjectToViewModel(Resolution resolution) =>
         new(resolution.Height, resolution.Width);

@@ -5,6 +5,239 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/artwork/logo": {
+      "post": {
+        "tags": [
+          "Artwork"
+        ],
+        "summary": "Upload a channel logo",
+        "operationId": "UploadChannelLogo",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/channels/{id}/logo": {
+      "put": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Upload and set a channel's logo",
+        "operationId": "SetChannelLogo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/channels": {
       "get": {
         "tags": [
@@ -263,6 +496,7 @@
           "Channels"
         ],
         "summary": "Update a channel",
+        "description": "Fields that are omitted keep their current value, so a partial body is safe. SlugSeconds, MirrorSourceChannelId, PlayoutOffset, WatermarkId and FallbackFillerId are cleared by sending an explicit null; a string is cleared by sending an empty string.",
         "operationId": "UpdateChannel",
         "parameters": [
           {
@@ -357,6 +591,26 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -938,6 +1192,96 @@
       }
     },
     "/api/collections/{id}/items": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get the items in a collection",
+        "description": "Returns membership, which is what add and remove operate on. A show is returned as a show; it is not expanded into its episodes.",
+        "operationId": "GetCollectionItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionItemViewModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionItemViewModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionItemViewModel"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Collections"
@@ -2073,22 +2417,22 @@
           "content": {
             "application/json-patch+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+                "$ref": "#/components/schemas/CreateSequentialPlayoutRequest"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+                "$ref": "#/components/schemas/CreateSequentialPlayoutRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+                "$ref": "#/components/schemas/CreateSequentialPlayoutRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+                "$ref": "#/components/schemas/CreateSequentialPlayoutRequest"
               }
             }
           },
@@ -2638,6 +2982,308 @@
         }
       }
     },
+    "/api/schedules": {
+      "get": {
+        "tags": [
+          "Schedules"
+        ],
+        "summary": "Get all sequential schedules",
+        "operationId": "GetSchedules",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleResponseModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schedules/{name}": {
+      "get": {
+        "tags": [
+          "Schedules"
+        ],
+        "summary": "Get the YAML content of a sequential schedule",
+        "operationId": "GetSchedule",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Schedules"
+        ],
+        "summary": "Create or replace a sequential schedule",
+        "operationId": "PutSchedule",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Schedules"
+        ],
+        "summary": "Delete a sequential schedule",
+        "operationId": "DeleteSchedule",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/sessions": {
       "get": {
         "tags": [
@@ -2906,6 +3552,27 @@
           }
         }
       },
+      "ArtworkResponseModel": {
+        "required": [
+          "logoPath",
+          "logoContentType"
+        ],
+        "type": "object",
+        "properties": {
+          "logoPath": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "logoContentType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "ChannelIdleBehavior": {
         "type": "integer"
       },
@@ -2925,7 +3592,8 @@
           "name",
           "fFmpegProfile",
           "language",
-          "streamingMode"
+          "streamingMode",
+          "logoPath"
         ],
         "type": "object",
         "properties": {
@@ -2958,6 +3626,12 @@
             ]
           },
           "streamingMode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "logoPath": {
             "type": [
               "null",
               "string"
@@ -3266,6 +3940,32 @@
               "type": "integer",
               "format": "int32"
             }
+          }
+        }
+      },
+      "CollectionItemViewModel": {
+        "required": [
+          "mediaItemId",
+          "kind",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "mediaItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -3736,6 +4436,30 @@
           "playoutId": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "CreateSequentialPlayoutRequest": {
+        "required": [
+          "channelId"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scheduleName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "scheduleFile": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -4287,6 +5011,37 @@
           }
         }
       },
+      "ScheduleResponseModel": {
+        "required": [
+          "name",
+          "path",
+          "sizeBytes",
+          "lastModifiedUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "path": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastModifiedUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "SmartCollectionResponseModel": {
         "required": [
           "id",
@@ -4353,13 +5108,6 @@
             ],
             "format": "int32"
           },
-          "slugSeconds": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "format": "double"
-          },
           "logoPath": {
             "type": [
               "null",
@@ -4373,7 +5121,14 @@
             ]
           },
           "streamSelectorMode": {
-            "$ref": "#/components/schemas/ChannelStreamSelectorMode"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelStreamSelectorMode"
+              }
+            ]
           },
           "streamSelector": {
             "type": [
@@ -4394,10 +5149,135 @@
             ]
           },
           "playoutSource": {
-            "$ref": "#/components/schemas/ChannelPlayoutSource"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelPlayoutSource"
+              }
+            ]
           },
           "playoutMode": {
-            "$ref": "#/components/schemas/ChannelPlayoutMode"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelPlayoutMode"
+              }
+            ]
+          },
+          "streamingEngine": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/StreamingEngine"
+              }
+            ]
+          },
+          "nextEngineTextSubtitleMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/NextEngineTextSubtitleMode"
+              }
+            ]
+          },
+          "streamingMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/StreamingMode"
+              }
+            ]
+          },
+          "preferredSubtitleLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "subtitleMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelSubtitleMode"
+              }
+            ]
+          },
+          "musicVideoCreditsMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelMusicVideoCreditsMode"
+              }
+            ]
+          },
+          "musicVideoCreditsTemplate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "songVideoMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelSongVideoMode"
+              }
+            ]
+          },
+          "transcodeMode": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelTranscodeMode"
+              }
+            ]
+          },
+          "idleBehavior": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChannelIdleBehavior"
+              }
+            ]
+          },
+          "isEnabled": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "showInEpg": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "slugSeconds": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
           },
           "mirrorSourceChannelId": {
             "type": [
@@ -4413,15 +5293,6 @@
               "string"
             ]
           },
-          "streamingEngine": {
-            "$ref": "#/components/schemas/StreamingEngine"
-          },
-          "nextEngineTextSubtitleMode": {
-            "$ref": "#/components/schemas/NextEngineTextSubtitleMode"
-          },
-          "streamingMode": {
-            "$ref": "#/components/schemas/StreamingMode"
-          },
           "watermarkId": {
             "type": [
               "null",
@@ -4435,39 +5306,6 @@
               "integer"
             ],
             "format": "int32"
-          },
-          "preferredSubtitleLanguageCode": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "subtitleMode": {
-            "$ref": "#/components/schemas/ChannelSubtitleMode"
-          },
-          "musicVideoCreditsMode": {
-            "$ref": "#/components/schemas/ChannelMusicVideoCreditsMode"
-          },
-          "musicVideoCreditsTemplate": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "songVideoMode": {
-            "$ref": "#/components/schemas/ChannelSongVideoMode"
-          },
-          "transcodeMode": {
-            "$ref": "#/components/schemas/ChannelTranscodeMode"
-          },
-          "idleBehavior": {
-            "$ref": "#/components/schemas/ChannelIdleBehavior"
-          },
-          "isEnabled": {
-            "type": "boolean"
-          },
-          "showInEpg": {
-            "type": "boolean"
           }
         }
       },
@@ -4751,10 +5589,13 @@
   ],
   "tags": [
     {
-      "name": "Channel"
+      "name": "Artwork"
     },
     {
       "name": "Channels"
+    },
+    {
+      "name": "Channel"
     },
     {
       "name": "Collections"
@@ -4773,6 +5614,9 @@
     },
     {
       "name": "Resolution"
+    },
+    {
+      "name": "Schedules"
     },
     {
       "name": "Sessions"

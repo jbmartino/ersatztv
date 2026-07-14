@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
 using Destructurama;
 using ErsatzTV.Core;
 using ErsatzTV.Services.Validators;
@@ -47,9 +49,14 @@ public class Program
 
     public static async Task<int> Main(string[] args)
     {
+        // Keyed on the config folder, not a constant, so an instance running against an
+        // isolated ETV_CONFIG_FOLDER (a staging copy) can coexist with the primary one.
+        string singletonId = Convert.ToHexString(
+            SHA256.HashData(Encoding.UTF8.GetBytes(FileSystemLayout.AppDataFolder)))[..16];
+
         using var _ = new Mutex(
             true,
-            "Global\\ErsatzTV.Singleton.74360cd8985c4d1fb6bc9e81887206fe",
+            $"Global\\ErsatzTV.Singleton.{singletonId}",
             out bool createdNew);
         if (!createdNew)
         {

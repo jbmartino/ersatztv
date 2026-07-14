@@ -57,6 +57,8 @@ public static class FileSystemLayout
 
     public static readonly string ScriptsFolder;
 
+    public static readonly string SchedulesFolder;
+
     public static readonly string MultiEpisodeShuffleTemplatesFolder;
 
     public static readonly string AudioStreamSelectorScriptsFolder;
@@ -186,6 +188,8 @@ public static class FileSystemLayout
         GraphicsElementsMotionTemplatesFolder = Path.Combine(GraphicsElementsTemplatesFolder, "motion");
 
         ScriptsFolder = Path.Combine(AppDataFolder, "scripts");
+
+        SchedulesFolder = Path.Combine(AppDataFolder, "schedules");
 
         MultiEpisodeShuffleTemplatesFolder = Path.Combine(ScriptsFolder, "multi-episode-shuffle");
 

@@ -102,49 +102,28 @@ public class ChannelController(ChannelWriter<IBackgroundServiceRequest> workerCh
     [HttpPut("/api/channels/{id:int}", Name = "UpdateChannel")]
     [Tags("Channels")]
     [EndpointSummary("Update a channel")]
+    [EndpointDescription(
+        "Fields that are omitted keep their current value, so a partial body is safe. SlugSeconds, "
+        + "MirrorSourceChannelId, PlayoutOffset, WatermarkId and FallbackFillerId are cleared by sending an "
+        + "explicit null; a string is cleared by sending an empty string.")]
     [EndpointGroupName("general")]
     [ProducesResponseType(typeof(ChannelViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateOne(
         int id,
         [Required] [FromBody]
         UpdateChannelRequest request)
     {
-        var command = new UpdateChannel(
-            id,
-            request.Name,
-            request.Number,
-            request.Group,
-            request.Categories ?? string.Empty,
-            request.FFmpegProfileId ?? 0,
-            request.SlugSeconds,
-            Logo(request),
-            request.StreamSelectorMode,
-            request.StreamSelector,
-            request.PreferredAudioLanguageCode,
-            request.PreferredAudioTitle,
-            request.PlayoutSource,
-            request.PlayoutMode,
-            request.MirrorSourceChannelId,
-            request.PlayoutOffset,
-            request.StreamingEngine,
-            request.NextEngineTextSubtitleMode,
-            StreamingModeFor(request),
-            request.WatermarkId,
-            request.FallbackFillerId,
-            request.PreferredSubtitleLanguageCode,
-            request.SubtitleMode,
-            request.MusicVideoCreditsMode,
-            MusicVideoCreditsTemplateFor(request),
-            request.SongVideoMode,
-            request.TranscodeMode,
-            request.IdleBehavior,
-            request.IsEnabled,
-            request.ShowInEpg);
+        Option<ChannelViewModel> maybeChannel = await mediator.Send(new GetChannelById(id));
+        foreach (ChannelViewModel existing in maybeChannel)
+        {
+            Either<BaseError, ChannelViewModel> result = await mediator.Send(MergeOnto(id, request, existing));
+            return result.Match<IActionResult>(Ok, error => Problem(error.ToString()));
+        }
 
-        Either<BaseError, ChannelViewModel> result = await mediator.Send(command);
-        return result.Match<IActionResult>(Ok, error => Problem(error.ToString()));
+        return NotFound();
     }
 
     [HttpDelete("/api/channels/{id:int}", Name = "DeleteChannel")]
@@ -176,6 +155,66 @@ public class ChannelController(ChannelWriter<IBackgroundServiceRequest> workerCh
 
         return NotFound();
     }
+
+    /// <summary>
+    ///     Builds an update command from the channel as it exists today, overwriting only what the request actually
+    ///     supplied. Anything the caller omitted round-trips its current value, so a partial body cannot silently
+    ///     reset the fields it did not mention.
+    /// </summary>
+    private static UpdateChannel MergeOnto(int id, UpdateChannelRequest request, ChannelViewModel existing)
+    {
+        ChannelMusicVideoCreditsMode musicVideoCreditsMode =
+            request.MusicVideoCreditsMode ?? existing.MusicVideoCreditsMode;
+
+        // a template is only meaningful when generating subtitles, which is the invariant the channel editor keeps
+        string musicVideoCreditsTemplate = musicVideoCreditsMode is ChannelMusicVideoCreditsMode.GenerateSubtitles
+            ? request.MusicVideoCreditsTemplate ?? existing.MusicVideoCreditsTemplate
+            : null;
+
+        // unlike create, the streaming mode is left as-is for the next engine; the update handler already coerces an
+        // incompatible mode, and it accepts more modes than the create path forces
+        return new UpdateChannel(
+            id,
+            request.Name ?? existing.Name,
+            request.Number ?? existing.Number,
+            request.Group ?? existing.Group,
+            request.Categories ?? existing.Categories ?? string.Empty,
+            request.FFmpegProfileId ?? existing.FFmpegProfileId,
+            request.SlugSecondsSet ? request.SlugSeconds : existing.SlugSeconds,
+            LogoFor(request, existing),
+            request.StreamSelectorMode ?? existing.StreamSelectorMode,
+            request.StreamSelector ?? existing.StreamSelector,
+            request.PreferredAudioLanguageCode ?? existing.PreferredAudioLanguageCode,
+            request.PreferredAudioTitle ?? existing.PreferredAudioTitle,
+            request.PlayoutSource ?? existing.PlayoutSource,
+            request.PlayoutMode ?? existing.PlayoutMode,
+            request.MirrorSourceChannelIdSet ? request.MirrorSourceChannelId : existing.MirrorSourceChannelId,
+            request.PlayoutOffsetSet ? request.PlayoutOffset : existing.PlayoutOffset,
+            request.StreamingEngine ?? existing.StreamingEngine,
+            request.NextEngineTextSubtitleMode ?? existing.NextEngineTextSubtitleMode,
+            request.StreamingMode ?? existing.StreamingMode,
+            request.WatermarkIdSet ? request.WatermarkId : existing.WatermarkId,
+            request.FallbackFillerIdSet ? request.FallbackFillerId : existing.FallbackFillerId,
+            request.PreferredSubtitleLanguageCode ?? existing.PreferredSubtitleLanguageCode,
+            request.SubtitleMode ?? existing.SubtitleMode,
+            musicVideoCreditsMode,
+            musicVideoCreditsTemplate,
+            request.SongVideoMode ?? existing.SongVideoMode,
+            request.TranscodeMode ?? existing.TranscodeMode,
+            request.IdleBehavior ?? existing.IdleBehavior,
+            request.IsEnabled ?? existing.IsEnabled,
+            request.ShowInEpg ?? existing.ShowInEpg);
+    }
+
+    /// <summary>
+    ///     An omitted logo path carries the current logo forward. The view model already renders it as
+    ///     "iptv/logos/{path}", which the update handler strips back off, so the value round-trips. An empty path
+    ///     removes the logo, which is what the handler does with a blank path.
+    /// </summary>
+    private static ArtworkContentTypeModel LogoFor(UpdateChannelRequest request, ChannelViewModel existing) =>
+        request.LogoPath is null
+            ? existing.Logo ?? ArtworkContentTypeModel.None
+            : new ArtworkContentTypeModel(request.LogoPath, request.LogoContentType ?? string.Empty);
 
     private static ArtworkContentTypeModel Logo(CreateChannelRequest request) =>
         string.IsNullOrWhiteSpace(request.LogoPath)

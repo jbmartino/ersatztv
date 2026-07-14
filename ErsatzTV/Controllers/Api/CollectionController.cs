@@ -87,6 +87,24 @@ public class CollectionController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    ///     The media items a collection contains. Without this there is no way to read a collection's membership back,
+    ///     so a client can add items but can never tell whether it needs to, which makes reconciling one impossible.
+    /// </summary>
+    [HttpGet("/api/collections/{id:int}/items", Name = "GetCollectionItems")]
+    [Tags("Collections")]
+    [EndpointSummary("Get the items in a collection")]
+    [EndpointDescription(
+        "Returns membership, which is what add and remove operate on. A show is returned as a show; it is not "
+        + "expanded into its episodes.")]
+    [ProducesResponseType(typeof(List<CollectionItemViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetItems(int id)
+    {
+        Option<List<CollectionItemViewModel>> maybeItems = await mediator.Send(new GetCollectionItemsForApi(id));
+        return maybeItems.Match<IActionResult>(Ok, () => NotFound());
+    }
+
+    /// <summary>
     ///     Adds media items to a collection. Every affected playout is refreshed automatically.
     /// </summary>
     [HttpPost("/api/collections/{id:int}/items", Name = "AddCollectionItems")]

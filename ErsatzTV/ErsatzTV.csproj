@@ -22,10 +22,12 @@
         <OpenApiGenerateDocumentsOnBuild>false</OpenApiGenerateDocumentsOnBuild>
     </PropertyGroup>
 
+    <!-- Conditioned on the source existing: msbuild skips GenerateOpenApiDocuments when it is up to date, but still
+         runs this target, so an unconditional Move fails the build on any re-run. -->
     <Target Name="RenameOpenApiFiles" AfterTargets="GenerateOpenApiDocuments">
-        <Move SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV.json" DestinationFiles="$(OpenApiDocumentsDirectory)\v1.json" />
-        <Move SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule.json" DestinationFiles="$(OpenApiDocumentsDirectory)\scripted-schedule.json" />
-        <Move SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule-tagged.json" DestinationFiles="$(OpenApiDocumentsDirectory)\scripted-schedule-tagged.json" />
+        <Move Condition="Exists('$(OpenApiDocumentsDirectory)\ErsatzTV.json')" SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV.json" DestinationFiles="$(OpenApiDocumentsDirectory)\v1.json" />
+        <Move Condition="Exists('$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule.json')" SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule.json" DestinationFiles="$(OpenApiDocumentsDirectory)\scripted-schedule.json" />
+        <Move Condition="Exists('$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule-tagged.json')" SourceFiles="$(OpenApiDocumentsDirectory)\ErsatzTV_scripted-schedule-tagged.json" DestinationFiles="$(OpenApiDocumentsDirectory)\scripted-schedule-tagged.json" />
     </Target>
 
     <ItemGroup>

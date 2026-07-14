@@ -57,8 +57,9 @@ public class PlayoutController(ChannelWriter<IBackgroundServiceRequest> workerCh
         Create(new CreateClassicPlayout(request.ChannelId, request.ProgramScheduleId));
 
     /// <summary>
-    ///     Creates a sequential (YAML) playout. The schedule file is read from disk on every build, so scheduling
-    ///     can live in version control rather than in the database.
+    ///     Creates a sequential (YAML) playout. The schedule is read from disk on every build, so scheduling
+    ///     can live in version control rather than in the database. Reference it by ScheduleName (uploaded
+    ///     through /api/schedules) or by an absolute ScheduleFile path on the server.
     /// </summary>
     [HttpPost("/api/playouts/sequential", Name = "CreateSequentialPlayout")]
     [Tags("Playouts")]
@@ -68,8 +69,31 @@ public class PlayoutController(ChannelWriter<IBackgroundServiceRequest> workerCh
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public Task<IActionResult> AddSequential(
         [Required] [FromBody]
-        CreateFilePlayoutRequest request) =>
-        Create(new CreateSequentialPlayout(request.ChannelId, request.ScheduleFile));
+        CreateSequentialPlayoutRequest request)
+    {
+        bool hasName = !string.IsNullOrWhiteSpace(request.ScheduleName);
+        bool hasFile = !string.IsNullOrWhiteSpace(request.ScheduleFile);
+
+        if (hasName == hasFile)
+        {
+            ModelState.AddModelError(
+                nameof(request.ScheduleName),
+                "Exactly one of ScheduleName or ScheduleFile is required");
+            return Task.FromResult<IActionResult>(ValidationProblem(ModelState));
+        }
+
+        string scheduleFile = request.ScheduleFile;
+        if (hasName)
+        {
+            if (!SchedulesController.TryResolvePath(request.ScheduleName, out scheduleFile))
+            {
+                ModelState.AddModelError(nameof(request.ScheduleName), "Invalid schedule name");
+                return Task.FromResult<IActionResult>(ValidationProblem(ModelState));
+            }
+        }
+
+        return Create(new CreateSequentialPlayout(request.ChannelId, scheduleFile));
+    }
 
     [HttpPost("/api/playouts/scripted", Name = "CreateScriptedPlayout")]
     [Tags("Playouts")]

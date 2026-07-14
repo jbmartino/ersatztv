@@ -391,6 +391,7 @@ public class Startup
             FileSystemLayout.GraphicsElementsSubtitleTemplatesFolder,
             FileSystemLayout.GraphicsElementsMotionTemplatesFolder,
             FileSystemLayout.ScriptsFolder,
+            FileSystemLayout.SchedulesFolder,
             FileSystemLayout.MultiEpisodeShuffleTemplatesFolder,
             FileSystemLayout.AudioStreamSelectorScriptsFolder,
             FileSystemLayout.MpegTsScriptsFolder,

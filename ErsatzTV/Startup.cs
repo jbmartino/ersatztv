@@ -329,13 +329,7 @@ public class Startup
                 options.OutputFormatters.Insert(0, new DeviceXmlOutputFormatter());
                 options.OutputFormatters.Insert(0, new HdhrJsonOutputFormatter());
             })
-            .AddNewtonsoftJson(opt =>
-            {
-                opt.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                opt.SerializerSettings.ContractResolver = new CustomContractResolver();
-                opt.SerializerSettings.Converters.Add(new StringEnumConverter());
-            });
+            .AddNewtonsoftJson(opt => ApiJsonSettings.Configure(opt.SerializerSettings));
 
         services.AddScoped(_ => new ConditionalIptvAuthorizeFilter("JwtOnlyScheme"));
 

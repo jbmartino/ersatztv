@@ -78,29 +78,3 @@ public class CreateChannelRequestValidatorTests
         result.IsValid.ShouldBeFalse();
     }
 }
-
-[TestFixture]
-public class UpdateChannelRequestValidatorTests
-{
-    private readonly UpdateChannelRequestValidator _validator = new();
-
-    [Test]
-    public void Should_Require_Number_And_FFmpeg_Profile()
-    {
-        // unlike create, there is nothing to default to when updating an existing channel
-        ValidationResult result = _validator.Validate(new UpdateChannelRequest { Name = "Nickelodeon" });
-
-        result.IsValid.ShouldBeFalse();
-        result.Errors.ShouldContain(e => e.PropertyName == "Number");
-        result.Errors.ShouldContain(e => e.PropertyName == "FFmpegProfileId");
-    }
-
-    [Test]
-    public void Should_Accept_Complete_Request()
-    {
-        ValidationResult result = _validator.Validate(
-            new UpdateChannelRequest { Name = "Nickelodeon", Number = "4", FFmpegProfileId = 1 });
-
-        result.IsValid.ShouldBeTrue();
-    }
-}

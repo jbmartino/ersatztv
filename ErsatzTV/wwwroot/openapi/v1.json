@@ -11,6 +11,26 @@
           "Channel"
         ],
         "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -41,6 +61,390 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Create a channel",
+        "operationId": "CreateChannel",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChannelRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChannelRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChannelRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChannelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateChannelResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateChannelResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateChannelResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/channels/{id}": {
+      "get": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Get a channel",
+        "operationId": "GetChannel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Update a channel",
+        "operationId": "UpdateChannel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateChannelRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateChannelRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateChannelRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateChannelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelViewModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Delete a channel",
+        "operationId": "DeleteChannel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/channels/{channelNumber}/playout/reset": {
@@ -60,8 +464,693 @@
           }
         ],
         "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collections": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get all collections",
+        "operationId": "GetCollections",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionResponseModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Create a collection",
+        "operationId": "CreateCollection",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCollectionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCollectionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCollectionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCollectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collections/{id}": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get a collection",
+        "operationId": "GetCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Update a collection",
+        "operationId": "UpdateCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCollectionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCollectionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCollectionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCollectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Delete a collection",
+        "operationId": "DeleteCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collections/{id}/items": {
+      "post": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Add items to a collection",
+        "operationId": "AddCollectionItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionItemsRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionItemsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionItemsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionItemsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Remove items from a collection",
+        "operationId": "RemoveCollectionItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCollectionItemsRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCollectionItemsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCollectionItemsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCollectionItemsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -205,6 +1294,240 @@
         }
       }
     },
+    "/api/libraries": {
+      "get": {
+        "tags": [
+          "Libraries"
+        ],
+        "summary": "Get all configured libraries",
+        "operationId": "GetLibraries",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LibraryViewModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LibraryViewModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LibraryViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Libraries"
+        ],
+        "summary": "Create a local library",
+        "operationId": "CreateLocalLibrary",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLocalLibraryRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLocalLibraryRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLocalLibraryRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLocalLibraryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalLibraryViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalLibraryViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalLibraryViewModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/media/shows": {
+      "get": {
+        "tags": [
+          "Libraries"
+        ],
+        "summary": "Get all television shows",
+        "operationId": "GetTelevisionShows",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NamedMediaItemViewModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NamedMediaItemViewModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NamedMediaItemViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/libraries/{id}/scan": {
       "post": {
         "tags": [
@@ -223,8 +1546,48 @@
           }
         ],
         "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -272,8 +1635,48 @@
           "required": true
         },
         "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -310,6 +1713,887 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/maintenance/clean_artwork": {
+      "post": {
+        "tags": [
+          "Maintenance"
+        ],
+        "summary": "Clean artwork cache",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/playouts": {
+      "get": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Get all playouts",
+        "operationId": "GetPlayouts",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayoutResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayoutResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayoutResponseModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/{id}": {
+      "get": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Get a playout, including its build status",
+        "operationId": "GetPlayout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayoutResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayoutResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayoutResponseModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Delete a playout",
+        "operationId": "DeletePlayout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/classic": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Create a classic playout",
+        "operationId": "CreateClassicPlayout",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassicPlayoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassicPlayoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassicPlayoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassicPlayoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/sequential": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Create a sequential (YAML) playout",
+        "operationId": "CreateSequentialPlayout",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/scripted": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Create a scripted playout",
+        "operationId": "CreateScriptedPlayout",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/external-json": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Create an external json playout",
+        "operationId": "CreateExternalJsonPlayout",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFilePlayoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/block": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Create a block playout",
+        "operationId": "CreateBlockPlayout",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlockPlayoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlockPlayoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlockPlayoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlockPlayoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePlayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playouts/{id}/build": {
+      "post": {
+        "tags": [
+          "Playouts"
+        ],
+        "summary": "Queue a playout build",
+        "operationId": "BuildPlayout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PlayoutBuildMode"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -589,6 +2873,51 @@
   },
   "components": {
     "schemas": {
+      "ArtworkContentTypeModel": {
+        "required": [
+          "path",
+          "contentType"
+        ],
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contentType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "isExternalUrl": {
+            "type": "boolean"
+          },
+          "hasContentType": {
+            "type": "boolean"
+          },
+          "urlWithContentType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ChannelIdleBehavior": {
+        "type": "integer"
+      },
+      "ChannelMusicVideoCreditsMode": {
+        "type": "integer"
+      },
+      "ChannelPlayoutMode": {
+        "type": "integer"
+      },
+      "ChannelPlayoutSource": {
+        "type": "integer"
+      },
       "ChannelResponseModel": {
         "required": [
           "id",
@@ -636,6 +2965,333 @@
           }
         }
       },
+      "ChannelSongVideoMode": {
+        "type": "integer"
+      },
+      "ChannelStreamSelectorMode": {
+        "type": "integer"
+      },
+      "ChannelSubtitleMode": {
+        "type": "integer"
+      },
+      "ChannelTranscodeMode": {
+        "type": "integer"
+      },
+      "ChannelViewModel": {
+        "required": [
+          "id",
+          "number",
+          "name",
+          "group",
+          "categories",
+          "fFmpegProfileId",
+          "slugSeconds",
+          "logo",
+          "streamSelectorMode",
+          "streamSelector",
+          "preferredAudioLanguageCode",
+          "preferredAudioTitle",
+          "playoutSource",
+          "playoutMode",
+          "mirrorSourceChannelId",
+          "playoutOffset",
+          "streamingEngine",
+          "nextEngineTextSubtitleMode",
+          "streamingMode",
+          "watermarkId",
+          "fallbackFillerId",
+          "playoutCount",
+          "preferredSubtitleLanguageCode",
+          "subtitleMode",
+          "musicVideoCreditsMode",
+          "musicVideoCreditsTemplate",
+          "songVideoMode",
+          "transcodeMode",
+          "idleBehavior",
+          "isEnabled",
+          "showInEpg"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "group": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "categories": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "fFmpegProfileId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "slugSeconds": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "logo": {
+            "$ref": "#/components/schemas/ArtworkContentTypeModel"
+          },
+          "streamSelectorMode": {
+            "$ref": "#/components/schemas/ChannelStreamSelectorMode"
+          },
+          "streamSelector": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioTitle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "playoutSource": {
+            "$ref": "#/components/schemas/ChannelPlayoutSource"
+          },
+          "playoutMode": {
+            "$ref": "#/components/schemas/ChannelPlayoutMode"
+          },
+          "mirrorSourceChannelId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "playoutOffset": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "streamingEngine": {
+            "$ref": "#/components/schemas/StreamingEngine"
+          },
+          "nextEngineTextSubtitleMode": {
+            "$ref": "#/components/schemas/NextEngineTextSubtitleMode"
+          },
+          "streamingMode": {
+            "$ref": "#/components/schemas/StreamingMode"
+          },
+          "watermarkId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "fallbackFillerId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "playoutCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "preferredSubtitleLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "subtitleMode": {
+            "$ref": "#/components/schemas/ChannelSubtitleMode"
+          },
+          "musicVideoCreditsMode": {
+            "$ref": "#/components/schemas/ChannelMusicVideoCreditsMode"
+          },
+          "musicVideoCreditsTemplate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "songVideoMode": {
+            "$ref": "#/components/schemas/ChannelSongVideoMode"
+          },
+          "transcodeMode": {
+            "$ref": "#/components/schemas/ChannelTranscodeMode"
+          },
+          "idleBehavior": {
+            "$ref": "#/components/schemas/ChannelIdleBehavior"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "showInEpg": {
+            "type": "boolean"
+          },
+          "webEncodedName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CollectionItemsRequest": {
+        "type": "object",
+        "properties": {
+          "movieIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "showIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "seasonIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "episodeIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "artistIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "musicVideoIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "otherVideoIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "songIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "imageIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "remoteStreamIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "CollectionResponseModel": {
+        "required": [
+          "id",
+          "name",
+          "useCustomPlaybackOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "useCustomPlaybackOrder": {
+            "type": "boolean"
+          }
+        }
+      },
       "CombinedVersion": {
         "required": [
           "apiVersion",
@@ -655,10 +3311,223 @@
           }
         }
       },
+      "CreateBlockPlayoutRequest": {
+        "required": [
+          "channelId"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateChannelRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "number": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "group": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "categories": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "fFmpegProfileId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "slugSeconds": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "logoPath": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "logoContentType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "streamSelectorMode": {
+            "$ref": "#/components/schemas/ChannelStreamSelectorMode"
+          },
+          "streamSelector": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioTitle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "playoutSource": {
+            "$ref": "#/components/schemas/ChannelPlayoutSource"
+          },
+          "playoutMode": {
+            "$ref": "#/components/schemas/ChannelPlayoutMode"
+          },
+          "mirrorSourceChannelId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "playoutOffset": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "streamingEngine": {
+            "$ref": "#/components/schemas/StreamingEngine"
+          },
+          "nextEngineTextSubtitleMode": {
+            "$ref": "#/components/schemas/NextEngineTextSubtitleMode"
+          },
+          "streamingMode": {
+            "$ref": "#/components/schemas/StreamingMode"
+          },
+          "watermarkId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "fallbackFillerId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "preferredSubtitleLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "subtitleMode": {
+            "$ref": "#/components/schemas/ChannelSubtitleMode"
+          },
+          "musicVideoCreditsMode": {
+            "$ref": "#/components/schemas/ChannelMusicVideoCreditsMode"
+          },
+          "musicVideoCreditsTemplate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "songVideoMode": {
+            "$ref": "#/components/schemas/ChannelSongVideoMode"
+          },
+          "transcodeMode": {
+            "$ref": "#/components/schemas/ChannelTranscodeMode"
+          },
+          "idleBehavior": {
+            "$ref": "#/components/schemas/ChannelIdleBehavior"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "showInEpg": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateChannelResult": {
+        "required": [
+          "channelId"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateClassicPlayoutRequest": {
+        "required": [
+          "channelId",
+          "programScheduleId"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "programScheduleId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateCollectionRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "CreateFFmpegProfile": {
         "required": [
           "name",
           "threadCount",
+          "normalizeAudio",
+          "normalizeVideo",
           "hardwareAcceleration",
           "vaapiDisplay",
           "vaapiDriver",
@@ -666,6 +3535,7 @@
           "qsvExtraHardwareFrames",
           "resolutionId",
           "scalingBehavior",
+          "padMode",
           "videoFormat",
           "videoProfile",
           "videoPreset",
@@ -678,9 +3548,11 @@
           "audioBitrate",
           "audioBufferSize",
           "normalizeLoudnessMode",
+          "targetLoudness",
           "audioChannels",
           "audioSampleRate",
           "normalizeFramerate",
+          "normalizeColors",
           "deinterlaceVideo"
         ],
         "type": "object",
@@ -694,6 +3566,12 @@
           "threadCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "normalizeAudio": {
+            "type": "boolean"
+          },
+          "normalizeVideo": {
+            "type": "boolean"
           },
           "hardwareAcceleration": {
             "$ref": "#/components/schemas/HardwareAccelerationKind"
@@ -726,6 +3604,9 @@
           },
           "scalingBehavior": {
             "$ref": "#/components/schemas/ScalingBehavior"
+          },
+          "padMode": {
+            "$ref": "#/components/schemas/FilterMode"
           },
           "videoFormat": {
             "$ref": "#/components/schemas/FFmpegProfileVideoFormat"
@@ -773,6 +3654,13 @@
           "normalizeLoudnessMode": {
             "$ref": "#/components/schemas/NormalizeLoudnessMode"
           },
+          "targetLoudness": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
           "audioChannels": {
             "type": "integer",
             "format": "int32"
@@ -784,8 +3672,70 @@
           "normalizeFramerate": {
             "type": "boolean"
           },
+          "normalizeColors": {
+            "type": "boolean"
+          },
           "deinterlaceVideo": {
             "type": "boolean"
+          }
+        }
+      },
+      "CreateFilePlayoutRequest": {
+        "required": [
+          "channelId",
+          "scheduleFile"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scheduleFile": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CreateLocalLibraryRequest": {
+        "required": [
+          "name",
+          "mediaKind",
+          "paths"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "mediaKind": {
+            "$ref": "#/components/schemas/LibraryMediaKind"
+          },
+          "paths": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreatePlayoutResponse": {
+        "required": [
+          "playoutId"
+        ],
+        "type": "object",
+        "properties": {
+          "playoutId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -989,6 +3939,9 @@
           "Copy"
         ]
       },
+      "FilterMode": {
+        "type": "integer"
+      },
       "HardwareAccelerationKind": {
         "enum": [
           "None",
@@ -1032,11 +3985,249 @@
           }
         }
       },
+      "LibraryMediaKind": {
+        "type": "integer"
+      },
+      "LibraryViewModel": {
+        "required": [
+          "libraryKind",
+          "id",
+          "name",
+          "mediaKind",
+          "mediaSourceId",
+          "mediaSourceName"
+        ],
+        "type": "object",
+        "properties": {
+          "libraryKind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "mediaKind": {
+            "$ref": "#/components/schemas/LibraryMediaKind"
+          },
+          "mediaSourceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mediaSourceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "LocalLibraryViewModel": {
+        "required": [
+          "id",
+          "name",
+          "mediaKind",
+          "mediaSourceId"
+        ],
+        "type": "object",
+        "properties": {
+          "libraryKind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "mediaKind": {
+            "$ref": "#/components/schemas/LibraryMediaKind"
+          },
+          "mediaSourceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mediaSourceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "NamedMediaItemViewModel": {
+        "required": [
+          "mediaItemId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "mediaItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "NextEngineTextSubtitleMode": {
+        "type": "integer"
+      },
       "NormalizeLoudnessMode": {
         "enum": [
           "Off",
           "LoudNorm"
         ]
+      },
+      "PlayoutBuildMode": {
+        "type": "integer"
+      },
+      "PlayoutResponseModel": {
+        "required": [
+          "id",
+          "scheduleKind",
+          "channelNumber",
+          "channelName",
+          "scheduleName",
+          "scheduleFile",
+          "dailyRebuildTime",
+          "lastBuild",
+          "lastBuildSuccess",
+          "lastBuildMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scheduleKind": {
+            "$ref": "#/components/schemas/PlayoutScheduleKind"
+          },
+          "channelNumber": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "channelName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "scheduleName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "scheduleFile": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "dailyRebuildTime": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "lastBuild": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "lastBuildSuccess": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "lastBuildMessage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "PlayoutScheduleKind": {
+        "type": "integer"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RemoveCollectionItemsRequest": {
+        "type": "object",
+        "properties": {
+          "mediaItemIds": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
       },
       "ResolutionViewModel": {
         "required": [
@@ -1122,11 +4313,191 @@
           }
         }
       },
+      "StreamingEngine": {
+        "type": "integer"
+      },
+      "StreamingMode": {
+        "type": "integer"
+      },
+      "UpdateChannelRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "number": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "group": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "categories": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "fFmpegProfileId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "slugSeconds": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "logoPath": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "logoContentType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "streamSelectorMode": {
+            "$ref": "#/components/schemas/ChannelStreamSelectorMode"
+          },
+          "streamSelector": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "preferredAudioTitle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "playoutSource": {
+            "$ref": "#/components/schemas/ChannelPlayoutSource"
+          },
+          "playoutMode": {
+            "$ref": "#/components/schemas/ChannelPlayoutMode"
+          },
+          "mirrorSourceChannelId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "playoutOffset": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "streamingEngine": {
+            "$ref": "#/components/schemas/StreamingEngine"
+          },
+          "nextEngineTextSubtitleMode": {
+            "$ref": "#/components/schemas/NextEngineTextSubtitleMode"
+          },
+          "streamingMode": {
+            "$ref": "#/components/schemas/StreamingMode"
+          },
+          "watermarkId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "fallbackFillerId": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "preferredSubtitleLanguageCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "subtitleMode": {
+            "$ref": "#/components/schemas/ChannelSubtitleMode"
+          },
+          "musicVideoCreditsMode": {
+            "$ref": "#/components/schemas/ChannelMusicVideoCreditsMode"
+          },
+          "musicVideoCreditsTemplate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "songVideoMode": {
+            "$ref": "#/components/schemas/ChannelSongVideoMode"
+          },
+          "transcodeMode": {
+            "$ref": "#/components/schemas/ChannelTranscodeMode"
+          },
+          "idleBehavior": {
+            "$ref": "#/components/schemas/ChannelIdleBehavior"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "showInEpg": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateCollectionRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "useCustomPlaybackOrder": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          }
+        }
+      },
       "UpdateFFmpegProfile": {
         "required": [
           "fFmpegProfileId",
           "name",
           "threadCount",
+          "normalizeAudio",
+          "normalizeVideo",
           "hardwareAcceleration",
           "vaapiDisplay",
           "vaapiDriver",
@@ -1134,6 +4505,7 @@
           "qsvExtraHardwareFrames",
           "resolutionId",
           "scalingBehavior",
+          "padMode",
           "videoFormat",
           "videoProfile",
           "videoPreset",
@@ -1146,9 +4518,11 @@
           "audioBitrate",
           "audioBufferSize",
           "normalizeLoudnessMode",
+          "targetLoudness",
           "audioChannels",
           "audioSampleRate",
           "normalizeFramerate",
+          "normalizeColors",
           "deinterlaceVideo"
         ],
         "type": "object",
@@ -1166,6 +4540,12 @@
           "threadCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "normalizeAudio": {
+            "type": "boolean"
+          },
+          "normalizeVideo": {
+            "type": "boolean"
           },
           "hardwareAcceleration": {
             "$ref": "#/components/schemas/HardwareAccelerationKind"
@@ -1198,6 +4578,9 @@
           },
           "scalingBehavior": {
             "$ref": "#/components/schemas/ScalingBehavior"
+          },
+          "padMode": {
+            "$ref": "#/components/schemas/FilterMode"
           },
           "videoFormat": {
             "$ref": "#/components/schemas/FFmpegProfileVideoFormat"
@@ -1245,6 +4628,13 @@
           "normalizeLoudnessMode": {
             "$ref": "#/components/schemas/NormalizeLoudnessMode"
           },
+          "targetLoudness": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
           "audioChannels": {
             "type": "integer",
             "format": "int32"
@@ -1254,6 +4644,9 @@
             "format": "int32"
           },
           "normalizeFramerate": {
+            "type": "boolean"
+          },
+          "normalizeColors": {
             "type": "boolean"
           },
           "deinterlaceVideo": {
@@ -1295,15 +4688,76 @@
           "RadeonSI",
           "Nouveau"
         ]
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "description": "Only enforced when the ETV_API_KEY environment variable is set; the api is anonymous otherwise.",
+        "name": "X-Api-Key",
+        "in": "header"
       }
     }
   },
+  "security": [
+    {
+      "ApiKey": [ ]
+    }
+  ],
   "tags": [
     {
       "name": "Channel"
     },
     {
       "name": "Channels"
+    },
+    {
+      "name": "Collections"
     },
     {
       "name": "FFmpegProfile"
@@ -1313,6 +4767,9 @@
     },
     {
       "name": "Maintenance"
+    },
+    {
+      "name": "Playouts"
     },
     {
       "name": "Resolution"

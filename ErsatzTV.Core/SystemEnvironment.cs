@@ -62,6 +62,8 @@ public class SystemEnvironment
         JellyfinEnableStats = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ETV_JF_ENABLE_STATS"));
 
         NextFolder = Environment.GetEnvironmentVariable("ETV_NEXT_FOLDER");
+
+        ApiKey = Environment.GetEnvironmentVariable("ETV_API_KEY");
     }
 
     public static string BaseUrl { get; }
@@ -77,4 +79,8 @@ public class SystemEnvironment
     public static int JellyfinPageSize { get; }
     public static bool JellyfinEnableStats { get; }
     public static string NextFolder { get; }
+    public static string ApiKey { get; }
+
+    // when no api key is configured, the api behaves exactly as it did before: anonymous
+    public static bool ApiKeyIsConfigured => !string.IsNullOrWhiteSpace(ApiKey);
 }

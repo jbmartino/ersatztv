@@ -133,7 +133,36 @@ public class Startup
 
         services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(FileSystemLayout.DataProtectionFolder));
 
-        services.AddOpenApi("v1", options => { options.ShouldInclude += a => a.GroupName == "general"; });
+        services.AddOpenApi(
+            "v1",
+            options =>
+            {
+                options.ShouldInclude += a => a.GroupName == "general";
+                options.AddDocumentTransformer((document, _, _) =>
+                {
+                    document.Components ??= new OpenApiComponents();
+                    document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+                    document.Components.SecuritySchemes[ApiKeyAuthorizationFilter.SecuritySchemeName] =
+                        new OpenApiSecurityScheme
+                        {
+                            Type = SecuritySchemeType.ApiKey,
+                            Name = ApiKeyAuthorizationFilter.HeaderName,
+                            In = ParameterLocation.Header,
+                            Description =
+                                "Only enforced when the ETV_API_KEY environment variable is set; the api is anonymous otherwise."
+                        };
+
+                    document.Security ??= [];
+                    document.Security.Add(
+                        new OpenApiSecurityRequirement
+                        {
+                            [new OpenApiSecuritySchemeReference(ApiKeyAuthorizationFilter.SecuritySchemeName, document)]
+                                = []
+                        });
+
+                    return Task.CompletedTask;
+                });
+            });
 
         services.AddOpenApi(
             "scripted-schedule-tagged",
@@ -293,6 +322,7 @@ public class Startup
 
         services.AddControllers(options =>
             {
+                options.Filters.Add(new ApiKeyAuthorizationFilter());
                 options.OutputFormatters.Insert(0, new ConcatPlaylistOutputFormatter());
                 options.OutputFormatters.Insert(0, new ChannelPlaylistOutputFormatter());
                 options.OutputFormatters.Insert(0, new ChannelGuideOutputFormatter());

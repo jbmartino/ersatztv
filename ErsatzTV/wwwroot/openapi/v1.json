@@ -1638,6 +1638,67 @@
         }
       }
     },
+    "/api/fillers": {
+      "get": {
+        "tags": [
+          "Fillers"
+        ],
+        "summary": "List filler presets",
+        "description": "Returns each filler preset's id and name so a client can reference one by name.",
+        "operationId": "GetFillers",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FillerPresetResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FillerPresetResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FillerPresetResponseModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/libraries": {
       "get": {
         "tags": [
@@ -3515,6 +3576,67 @@
           }
         }
       }
+    },
+    "/api/watermarks": {
+      "get": {
+        "tags": [
+          "Watermarks"
+        ],
+        "summary": "List watermarks",
+        "description": "Returns each watermark's id and name so a client can reference one by name.",
+        "operationId": "GetWatermarks",
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WatermarkResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WatermarkResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WatermarkResponseModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4663,6 +4785,25 @@
           "Copy"
         ]
       },
+      "FillerPresetResponseModel": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "FilterMode": {
         "type": "integer"
       },
@@ -5571,6 +5712,25 @@
             }
           }
         }
+      },
+      "WatermarkResponseModel": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -5604,6 +5764,9 @@
       "name": "FFmpegProfile"
     },
     {
+      "name": "Fillers"
+    },
+    {
       "name": "Libraries"
     },
     {
@@ -5626,6 +5789,9 @@
     },
     {
       "name": "Version"
+    },
+    {
+      "name": "Watermarks"
     }
   ]
 }

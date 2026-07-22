@@ -13,7 +13,7 @@ public class OrderedScheduleItemsEnumerator : IScheduleItemsEnumerator
     {
         _sortedScheduleItems = scheduleItems.OrderBy(i => i.Index).ToList();
 
-        State = new CollectionEnumeratorState { Seed = state.Seed };
+        State = new CollectionEnumeratorState { Seed = state.Seed, Started = state.Started };
 
         if (state.Index >= _sortedScheduleItems.Count)
         {
@@ -31,7 +31,11 @@ public class OrderedScheduleItemsEnumerator : IScheduleItemsEnumerator
 
     public ProgramScheduleItem Current => _sortedScheduleItems[State.Index];
 
-    public void MoveNext() => State.Index = (State.Index + 1) % _sortedScheduleItems.Count;
+    public void MoveNext()
+    {
+        State.Index = (State.Index + 1) % _sortedScheduleItems.Count;
+        State.Started = true;
+    }
 
     public ProgramScheduleItem Peek(int offset) =>
         _sortedScheduleItems[(State.Index + offset) % _sortedScheduleItems.Count];

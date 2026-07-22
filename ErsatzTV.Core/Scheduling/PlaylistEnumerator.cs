@@ -31,9 +31,12 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
 
     public int EnumeratorIndex { get; private set; }
 
-    public void ResetState(CollectionEnumeratorState state) =>
+    public void ResetState(CollectionEnumeratorState state)
+    {
         // seed doesn't matter here
         State.Index = state.Index;
+        State.Started = state.Started;
+    }
 
     public string SchedulingContextName => "Playlist";
 
@@ -111,6 +114,8 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
                 _sortedEnumerators = ShufflePlaylistItems();
             }
         }
+
+        State.Started = true;
     }
 
     public void SetEnumeratorIndex(int enumeratorIndex) => EnumeratorIndex = enumeratorIndex % _sortedEnumerators.Count;
@@ -121,6 +126,7 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
         CollectionEnumeratorState state,
         bool shufflePlaylistItems,
         Option<int> batchSize,
+        bool randomStartPoint,
         CancellationToken cancellationToken)
     {
         var result = new PlaylistEnumerator
@@ -130,6 +136,9 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
             _shufflePlaylistItems = shufflePlaylistItems,
             _batchSize = batchSize
         };
+
+        // random start points must be applied on every build, not just the first
+        var random = new Random(state.Seed);
 
         // collections should share enumerators
         var enumeratorMap = new Dictionary<CollectionKey, IMediaCollectionEnumerator>();
@@ -166,6 +175,11 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
                 switch (playlistItem.PlaybackOrder)
                 {
                     case PlaybackOrder.Chronological:
+                        if (randomStartPoint)
+                        {
+                            initState.Index = items.Count > 0 ? random.Next(0, items.Count) : 0;
+                        }
+
                         enumerator = new ChronologicalMediaCollectionEnumerator(items, initState);
                         break;
                     // TODO: fix multi episode shuffle?
@@ -187,18 +201,22 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
                                 CollectionKey.ForPlaylistItem(playlistItem),
                                 cancellationToken),
                             initState,
-                            // TODO: fix this
-                            false,
+                            randomStartPoint,
                             cancellationToken);
                         break;
                     case PlaybackOrder.SeasonEpisode:
-                        // TODO: check random start point?
+                        if (randomStartPoint)
+                        {
+                            initState.Index = items.Count > 0 ? random.Next(0, items.Count) : 0;
+                        }
+
                         enumerator = new SeasonEpisodeMediaCollectionEnumerator(items, initState);
                         // season, episode will filter out season 0, so we may get an empty enumerator back
                         if (enumerator.Count == 0)
                         {
                             enumerator = null;
                         }
+
                         break;
                     case PlaybackOrder.Random:
                         enumerator = new RandomizedMediaCollectionEnumerator(items, initState);
@@ -229,7 +247,7 @@ public class PlaylistEnumerator : IMediaCollectionEnumerator
             result._sortedEnumerators = result.ShufflePlaylistItems();
         }
 
-        result.State = new CollectionEnumeratorState { Seed = state.Seed };
+        result.State = new CollectionEnumeratorState { Seed = state.Seed, Started = state.Started };
         result.EnumeratorIndex = 0;
 
         // this was a bug when playlist enumerators were first added; shouldn't happen anymore

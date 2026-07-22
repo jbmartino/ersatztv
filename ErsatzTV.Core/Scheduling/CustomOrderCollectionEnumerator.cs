@@ -25,16 +25,19 @@ public class CustomOrderCollectionEnumerator : IMediaCollectionEnumerator
         _lazyMinimumDuration = new Lazy<Option<TimeSpan>>(() =>
             _sortedMediaItems.Bind(i => i.GetNonZeroDuration()).OrderBy(identity).HeadOrNone());
 
-        State = new CollectionEnumeratorState { Seed = state.Seed };
+        State = new CollectionEnumeratorState { Seed = state.Seed, Started = state.Started };
         while (State.Index < state.Index)
         {
             MoveNext(Option<DateTimeOffset>.None);
         }
     }
 
-    public void ResetState(CollectionEnumeratorState state) =>
+    public void ResetState(CollectionEnumeratorState state)
+    {
         // seed doesn't matter here
         State.Index = state.Index;
+        State.Started = state.Started;
+    }
 
     public string SchedulingContextName => "Custom Order";
 
@@ -43,8 +46,11 @@ public class CustomOrderCollectionEnumerator : IMediaCollectionEnumerator
     public Option<MediaItem> Current => _sortedMediaItems.Count != 0 ? _sortedMediaItems[State.Index] : None;
     public Option<bool> CurrentIncludeInProgramGuide { get; }
 
-    public void MoveNext(Option<DateTimeOffset> scheduledAt) =>
+    public void MoveNext(Option<DateTimeOffset> scheduledAt)
+    {
         State.Index = (State.Index + 1) % _sortedMediaItems.Count;
+        State.Started = true;
+    }
 
     public Option<TimeSpan> MinimumDuration => _lazyMinimumDuration.Value;
 

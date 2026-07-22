@@ -21,7 +21,7 @@ public class RandomizedMediaCollectionEnumerator : IMediaCollectionEnumerator
                 _mediaItems.Bind(i => i.GetNonZeroDuration()).OrderBy(identity).HeadOrNone());
         _random = new Random(state.Seed);
 
-        State = new CollectionEnumeratorState { Seed = state.Seed };
+        State = new CollectionEnumeratorState { Seed = state.Seed, Started = state.Started };
         // we want to move at least once so we start with a random item and not the first
         // because _index defaults to 0
         if (State.Index == state.Index)
@@ -37,9 +37,12 @@ public class RandomizedMediaCollectionEnumerator : IMediaCollectionEnumerator
         }
     }
 
-    public void ResetState(CollectionEnumeratorState state) =>
+    public void ResetState(CollectionEnumeratorState state)
+    {
         // seed never changes here, no need to reset
         State.Index = state.Index;
+        State.Started = state.Started;
+    }
 
     public string SchedulingContextName => "Random";
 
@@ -57,6 +60,7 @@ public class RandomizedMediaCollectionEnumerator : IMediaCollectionEnumerator
 
         _index = _random.Next() % _mediaItems.Count;
         State.Index++;
+        State.Started = true;
     }
 
     public Option<TimeSpan> MinimumDuration => _lazyMinimumDuration.Value;

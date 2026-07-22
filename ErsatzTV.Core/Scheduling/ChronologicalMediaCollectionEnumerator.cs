@@ -22,7 +22,7 @@ public sealed class ChronologicalMediaCollectionEnumerator : IMediaCollectionEnu
 
         _lazyMediaItemGroupSize = new Lazy<Dictionary<int, int>>(CalculateMediaItemGroupSizes);
 
-        State = new CollectionEnumeratorState { Seed = state.Seed };
+        State = new CollectionEnumeratorState { Seed = state.Seed, Started = state.Started };
 
         if (state.Index >= _sortedMediaItems.Count)
         {
@@ -36,9 +36,12 @@ public sealed class ChronologicalMediaCollectionEnumerator : IMediaCollectionEnu
         }
     }
 
-    public void ResetState(CollectionEnumeratorState state) =>
+    public void ResetState(CollectionEnumeratorState state)
+    {
         // seed doesn't matter in chronological
         State.Index = state.Index;
+        State.Started = state.Started;
+    }
 
     public string SchedulingContextName => "Chronological";
 
@@ -53,6 +56,8 @@ public sealed class ChronologicalMediaCollectionEnumerator : IMediaCollectionEnu
         {
             State.Index = (State.Index + 1) % _sortedMediaItems.Count;
         }
+
+        State.Started = true;
     }
 
     public Option<TimeSpan> MinimumDuration => _lazyMinimumDuration.Value;
